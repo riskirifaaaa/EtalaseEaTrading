@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ea MT 5 RIS</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #0a0a0a;
+      color: white;
+      overflow-x: hidden;
+    }
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+    header {
+      text-align: center;
+      padding: 20px;
+      font-size: 24px;
+      font-weight: bold;
+      color: #00aaff;
+    }
+    .container {
+      display: flex;
+      padding: 20px;
+    }
+    .notes {
+      width: 30%;
+      background: rgba(0, 0, 50, 0.6);
+      padding: 15px;
+      border-radius: 10px;
+      margin-right: 20px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .catalog {
+      width: 70%;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    .item {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0,0,255,0.5);
+    }
+    .item img {
+      max-width: 100%;
+      border-radius: 10px;
+    }
+    .price {
+      color: #00aaff;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+    .buy-btn {
+      background: #00aaff;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s;
+      width: 100%;
+    }
+    .buy-btn:hover {
+      background: #0077aa;
+    }
+    footer {
+      margin-top: 20px;
+      text-align: center;
+      padding: 15px;
+      font-size: 14px;
+      background: rgba(0,0,50,0.6);
+    }
+
+    /* Tombol Rekomendasi Settingan (Kiri Atas) */
+    .settings-btn {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      background: rgba(0, 170, 255, 0.8);
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
+      z-index: 1001;
+      transition: 0.3s;
+      box-shadow: 0 0 10px rgba(0,170,255,0.5);
+    }
+    .settings-btn:hover {
+      background: rgba(0, 120, 200, 0.9);
+      transform: scale(1.05);
+    }
+
+    /* Modal Pembayaran */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.8);
+    }
+    .modal-content {
+      background: rgba(0, 0, 50, 0.9);
+      margin: 10% auto;
+      padding: 20px;
+      border-radius: 10px;
+      width: 80%;
+      max-width: 500px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(0,170,255,0.5);
+    }
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .close:hover {
+      color: white;
+    }
+    .payment-option {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .payment-option:hover {
+      background: rgba(0, 170, 255, 0.2);
+    }
+    .payment-option img {
+      max-width: 150px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+    }
+    .payment-details {
+      display: none;
+      margin-top: 10px;
+      padding: 10px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 5px;
+    }
+    .confirm-btn {
+      background: #00ff00;
+      color: black;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .confirm-btn:hover {
+      background: #00cc00;
+    }
+    .account-info {
+      font-size: 16px;
+      font-weight: bold;
+      color: #00aaff;
+      margin: 5px 0;
+    }
+
+    /* Modal Rekomendasi Settingan */
+    .settings-modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.8);
+    }
+    .settings-modal-content {
+      background: rgba(0, 0, 50, 0.9);
+      margin: 15% auto;
+      padding: 20px;
+      border-radius: 10px;
+      width: 80%;
+      max-width: 400px;
+      text-align: left;
+      box-shadow: 0 0 20px rgba(0,170,255,0.5);
+    }
+    .settings-list {
+      list-style: none;
+      padding: 0;
+    }
+    .settings-list li {
+      background: rgba(255, 255, 255, 0.05);
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 16px;
+      color: #00aaff;
+    }
+    .settings-list strong {
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <!-- Tombol Rekomendasi Settingan di Kiri Atas -->
+  <button class="settings-btn" onclick="openSettingsModal()">⚙️ Rekomendasi Settingan</button>
+
+  <canvas id="waves"></canvas>
+  <header>Etalase EA Trading</header>
+  <div class="container">
+    <div class="notes">
+      <h3>CARA KERJA EA</h3>
+      <ul>
+        <li>BIASA NO MARTINGLE</li>
+        <li>BIASA MARTINGLE</li>
+        <li>NO MARTINGLE EQUITY</li>
+        <li>MARTINGLE EQUITY</li>
+        <li>MARTINGLE LANGSUNG 0.02</li>
+      </ul>
+      <p><b>Apa itu Martingle?</b><br>
+      Kalau market jalan berlawanan, EA akan buka posisi tambahan dengan lot lebih besar supaya kalau harga balik, semua posisi bisa ditutup dalam kondisi profit bersih.</p>
+
+      <p><b>Cara Kerja EA:</b><br>
+      Start awal, EA buka 2 posisi sekaligus:<br>
+      1 Buy lot 0.01<br>
+      1 Sell lot 0.01<br>
+      Buy profit 3000 point, dia counter sell 0.01. Counter selanjutnya 0.02 → 0.04 → dst, dikali sampai 10 layer sesuai setting. Close ketika semua floating profit = $5.</p>
+
+      <p><b>Equity itu apa?</b><br>
+      Misal saldo Rp500.000, equity target Rp1.000.000. Kalau profit tercapai (equity naik ke Rp1.000.000), EA auto close semua posisi dan berhenti trading.</p>
+
+      <p><b>No Martingle?</b><br>
+      Hanya open lot 0.01 tanpa perkalian lot meskipun counter 15x.</p>
+
+      <p><b>Martingle Langsung?</b><br>
+      Counter pertama langsung 0.02 dari awal. Jadi lebih agresif.<br>
+      </p>
+    </div>
+
+    <div class="catalog">
+      <div class="item">
+        <img src="fo.jpg" alt="EA 1">
+        <h4>NO MARTINGLE</h4>
+        <p class="price">Rp200.000</p>
+        <button class="buy-btn" onclick="openModal('NO MARTINGLE', 'Rp200.000')">Beli Sekarang</button>
+      </div>
+      <div class="item">
+        <img src="fo.jpg" alt="EA 2">
+        <h4>MARTINGLE</h4>
+        <p class="price">Rp250.000</p>
+        <button class="buy-btn" onclick="openModal('MARTINGLE', 'Rp250.000')">Beli Sekarang</button>
+      </div>
+      <div class="item">
+        <img src="fotosample.png" alt="EA 3">
+        <h4>EQUITY NO MARTING</h4>
+        <p class="price">Rp280.000</p>
+        <button class="buy-btn" onclick="openModal('EQUITY NO MARTING', 'Rp280.000')">Beli Sekarang</button>
+      </div>
+      <div class="item">
+        <img src="fotosample.png" alt="EA 4">
+        <h4>EQUITY MARTINGLE</h4>
+        <p class="price">Rp300.000</p>
+        <button class="buy-btn" onclick="openModal('EQUITY MARTINGLE', 'Rp300.000')">Beli Sekarang</button>
+      </div>
+      <div class="item">
+        <img src="smple.jpg" alt="EA 5">
+        <h4>MARTING LANGSUNG</h4>
+        <p class="price">Rp360.000</p>
+        <button class="buy-btn" onclick="openModal('MARTING LANGSUNG', 'Rp360.000')">Beli Sekarang</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Pembayaran tersedia: QRIS, BCA, Blu BCA, Jago, Sea Bank, Dana
+  </footer>
+
+  <!-- Modal Pembayaran -->
+  <div id="paymentModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h3 id="modalTitle">Pilih Metode Pembayaran</h3>
+      <p id="modalPrice"></p>
+      <div class="payment-option" onclick="showDetails('qris')">
+        <h4>QRIS</h4>
+        <img src="qrr.jpg" alt="QRIS">
+        <div id="qris-details" class="payment-details">
+          <p>Scan QRIS ini dengan app bank/e-wallet Anda. Nominal: <span id="qrisAmount"></span></p>
+          <p>Setelah transfer, kirim bukti ke WA: 081252636815</p>
+          <button class="confirm-btn" onclick="confirmPayment('QRIS')">Konfirmasi Pembayaran</button>
+        </div>
+      </div>
+      <div class="payment-option" onclick="showDetails('blu-bca')">
+        <h4>Transfer Blu BCA</h4>
+        <div id="blu-bca-details" class="payment-details">
+          <p class="account-info">Rekening: 008657094621</p>
+          <p class="account-info">a/n: M.DWI RISKI</p>
+          <p class="account-info">Bank: Blu BCA</p>
+          <p>Nominal: <span id="bluBcaAmount"></span></p>
+          <p>Setelah transfer, kirim bukti ke WA: 081252636815</p>
+          <button class="confirm-btn" onclick="confirmPayment('Blu BCA')">Konfirmasi Pembayaran</button>
+        </div>
+      </div>
+      <div class="payment-option" onclick="showDetails('jago')">
+        <h4>Transfer Jago</h4>
+        <div id="jago-details" class="payment-details">
+          <p class="account-info">Rekening: 4889506049372786</p>
+          <p class="account-info">a/n: M. DWI RISKI</p>
+          <p class="account-info">Bank: Bank Jago</p>
+          <p>Nominal: <span id="jagoAmount"></span></p>
+          <p>Setelah transfer, kirim bukti ke WA: 081252636815</p>
+          <button class="confirm-btn" onclick="confirmPayment('Jago')">Konfirmasi Pembayaran</button>
+        </div>
+      </div>
+      <div class="payment-option" onclick="showDetails('sea-bank')">
+        <h4>Transfer Sea Bank</h4>
+        <div id="sea-bank-details" class="payment-details">
+          <p class="account-info">Rekening: 901437148557</p>
+          <p class="account-info">a/n: M. DWI RISKI</p>
+          <p class="account-info">Bank: Sea Bank</p>
+          <p>Nominal: <span id="seaBankAmount"></span></p>
+          <p>Setelah transfer, kirim bukti ke WA: 081252636815</p>
+          <button class="confirm-btn" onclick="confirmPayment('Sea Bank')">Konfirmasi Pembayaran</button>
+        </div>
+      </div>
+      <div class="payment-option" onclick="showDetails('dana')">
+        <h4>Dana</h4>
+        <div id="dana-details" class="payment-details">
+          <p class="account-info">Username Dana: 082150102225</p>
+          <p class="account-info">a/n: M. DWI RISKI</p>
+          <p>Nominal: <span id="danaAmount"></span></p>
+          <p>Setelah transfer, kirim bukti ke WA: 081252636815</p>
+          <button class="confirm-btn" onclick="confirmPayment('Dana')">Konfirmasi Pembayaran</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Rekomendasi Settingan -->
+  <div id="settingsModal" class="settings-modal">
+    <div class="settings-modal-content">
+      <span class="close" onclick="closeSettingsModal()">&times;</span>
+      <h3>Rekomendasi Settingan EA (Yang Saya Pakai)</h3>
+          <h3>MODAL 1000 USD/CENT/IDR/ MINIMAL DI 20-30 USD</h3>
+      
+      <!-- Keterangan HIGH RESIKO di atas UL -->
+      <div class="high-risk-warning">
+        ⚠️ HIGH RISK
+      </div>
+      
+      <ul class="settings-list">
+        <li onclick="showSettingTooltip('LOT: 0.01 - Ukuran lot awal untuk trading. Cocok untuk akun kecil agar risiko rendah.')"><strong>LOT:</strong> 0.01</li>
+        <li onclick="showSettingTooltip('POINT: 3000 - Jarak point untuk open counter posisi. Ini berdasarkan volatilitas pair seperti EURUSD.')"><strong>POINT:</strong> 3000</li>
+        <li onclick="showSettingTooltip('MAX Layer: 10 - Maksimal layer martingale. Jangan lebih dari ini untuk hindari drawdown besar.')"><strong>MAX Layer:</strong> 10</li>
+        <li onclick="showSettingTooltip('PROFIT Target: 2.0 - Target profit per cycle dalam USD. EA close semua posisi saat total profit capai ini.')"><strong>PROFIT Target:</strong> 2.0</li>
+        <li onclick="showSettingTooltip('EQUITY Target: 100000 - Target equity keseluruhan (dalam cent atau unit akun). EA stop trading saat equity capai ini.')"><strong>EQUITY Target:</strong> 100000</li>
+      </ul>
+      <div class="high-risk-warning">
+        ⚠️ MEDIUM RISK
+      </div>
+      
+      <ul class="settings-list">
+        <li onclick="showSettingTooltip('LOT: 0.01 - Ukuran lot awal untuk trading. Cocok untuk akun kecil agar risiko rendah.')"><strong>LOT:</strong> 0.01</li>
+        <li onclick="showSettingTooltip('POINT: 5000 - Jarak point untuk open counter posisi. Ini berdasarkan volatilitas pair seperti EURUSD.')"><strong>POINT:</strong> 5000</li>
+        <li onclick="showSettingTooltip('MAX Layer: 10 - Maksimal layer martingale. Jangan lebih dari ini untuk hindari drawdown besar.')"><strong>MAX Layer:</strong> 10</li>
+        <li onclick="showSettingTooltip('PROFIT Target: 2.0 - Target profit per cycle dalam USD. EA close semua posisi saat total profit capai ini.')"><strong>PROFIT Target:</strong> 3.0</li>
+        <li onclick="showSettingTooltip('EQUITY Target: 100000 - Target equity keseluruhan (dalam cent atau unit akun). EA stop trading saat equity capai ini.')"><strong>EQUITY Target:</strong> 100000</li>
+      </ul>
+      <div class="high-risk-warning">
+        ⚠️ LOW RISK
+      </div>
+      
+      <ul class="settings-list">
+        <li onclick="showSettingTooltip('LOT: 0.01 - Ukuran lot awal untuk trading. Cocok untuk akun kecil agar risiko rendah.')"><strong>LOT:</strong> 0.01</li>
+        <li onclick="showSettingTooltip('POINT: 10000 - Jarak point untuk open counter posisi. Ini berdasarkan volatilitas pair seperti EURUSD.')"><strong>POINT:</strong> 10000</li>
+        <li onclick="showSettingTooltip('MAX Layer: 10 - Maksimal layer martingale. Jangan lebih dari ini untuk hindari drawdown besar.')"><strong>MAX Layer:</strong> 10</li>
+        <li onclick="showSettingTooltip('PROFIT Target: 5.0 - Target profit per cycle dalam USD. EA close semua posisi saat total profit capai ini.')"><strong>PROFIT Target:</strong> 2.0</li>
+        <li onclick="showSettingTooltip('EQUITY Target: 100000 - Target equity keseluruhan (dalam cent atau unit akun). EA stop trading saat equity capai ini.')"><strong>EQUITY Target:</strong> 100000</li>
+      </ul>
+      <p style="font-size: 12px; color: #aaa;">Gunakan settingan Sesuaikan Saldo Misal Idr Ubah Di Profit Idr 15000 equity Sama Ubah Idr 1000000</p>
+      <P></P>
+       <p style="font-size: 12px; color: #aaa;">Tanyakan Ke Saya Jika Bingung ini settingan apa</p>
+    </div>
+  </div>
+<script>
+  const canvas = document.getElementById("waves");
+  const ctx = canvas.getContext("2d");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  let waveHeight = 50;
+  let speed = 0.05;
+  let increment = 0;
+
+  function animate() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle = "#000011";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    ctx.beginPath();
+    ctx.moveTo(0, canvas.height/2);
+    for(let i=0; i<=canvas.width; i++){
+      ctx.lineTo(i, canvas.height/2 + Math.sin(i*0.01 + increment) * waveHeight);
+    }
+    ctx.lineTo(canvas.width, canvas.height);
+    ctx.lineTo(0, canvas.height);
+    ctx.closePath();
+    ctx.fillStyle = "rgba(0,150,255,0.5)";
+    ctx.fill();
+
+    increment += speed;
+    requestAnimationFrame(animate);
+  }
+  animate();
+
+  window.addEventListener("resize", () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  });
+
+  // Fungsi Modal Pembayaran
+  let currentProduct = '';
+  let currentPrice = '';
+  function openModal(productName, price) {
+    currentProduct = productName;
+    currentPrice = price;
+    document.getElementById('modalTitle').innerHTML = `Pembayaran untuk: ${productName}`;
+    document.getElementById('modalPrice').innerHTML = `Harga: ${price}`;
+    // Update nominal di setiap detail
+    document.getElementById('qrisAmount').innerHTML = price;
+    document.getElementById('bluBcaAmount').innerHTML = price;
+    document.getElementById('jagoAmount').innerHTML = price;
+    document.getElementById('seaBankAmount').innerHTML = price;
+    document.getElementById('danaAmount').innerHTML = price;
+    document.getElementById('paymentModal').style.display = 'block';
+  }
+
+  function closeModal() {
+    document.getElementById('paymentModal').style.display = 'none';
+    // Sembunyikan semua details
+    document.querySelectorAll('.payment-details').forEach(detail => {
+      detail.style.display = 'none';
+    });
+  }
+
+  function showDetails(method) {
+    // Sembunyikan semua details dulu
+    document.querySelectorAll('.payment-details').forEach(detail => {
+      detail.style.display = 'none';
+    });
+    // Tampilkan yang dipilih (sesuaikan ID dengan kebab-case)
+    const detailsId = method + '-details';
+    const detailsElement = document.getElementById(detailsId);
+    if (detailsElement) {
+      detailsElement.style.display = 'block';
+    }
+  }
+
+  function confirmPayment(method) {
+    // Nomor WA (format internasional tanpa +)
+    const waNumber = '6281252636815';  // 081252636815 -> 6281252636815
+    // Pesan otomatis untuk WA
+    const message = `Halo, saya ingin membeli EA "${currentProduct}" seharga ${currentPrice} via ${method}. Saya sudah melakukan transfer/pembayaran. Tolong verifikasi dan kirim file EA-nya via email. Terima kasih!`;
+    // Encode pesan untuk URL
+    const encodedMessage = encodeURIComponent(message);
+    // URL WhatsApp
+    const waUrl = `https://wa.me/${waNumber}?text=${encodedMessage}`;
+    
+    // Buka WA langsung (di browser/mobile)
+    window.open(waUrl, '_blank');
+    
+    // Tutup modal setelah buka WA
+    closeModal();
+  }
+
+  // Fungsi Modal Rekomendasi Settingan
+  function openSettingsModal() {
+    document.getElementById('settingsModal').style.display = 'block';
+  }
+
+  function closeSettingsModal() {
+    document.getElementById('settingsModal').style.display = 'none';
+    // Sembunyikan tooltip juga
+    hideSettingTooltip();
+  }
+
+  // Fungsi Tooltip Popup untuk Penjelasan Setting (Muncul Saat Klik Item)
+  function showSettingTooltip(tooltipText) {
+    const tooltip = document.getElementById('settingTooltip');
+    tooltip.innerHTML = tooltipText;
+    tooltip.style.display = 'block';
+    
+    // Posisi tooltip dekat kursor (ambil posisi mouse terakhir)
+    // Untuk sederhana, posisikan di tengah modal atau fixed
+    tooltip.style.left = '50%';
+    tooltip.style.top = '50%';
+    tooltip.style.transform = 'translate(-50%, -50%)';
+    
+    // Auto hide setelah 5 detik
+    setTimeout(hideSettingTooltip, 5000);
+  }
+
+  function hideSettingTooltip() {
+    const tooltip = document.getElementById('settingTooltip');
+    tooltip.style.display = 'none';
+  }
+
+  // Tutup modal kalau klik di luar (untuk payment modal)
+  window.onclick = function(event) {
+    const paymentModal = document.getElementById('paymentModal');
+    const settingsModal = document.getElementById('settingsModal');
+    if (event.target == paymentModal) {
+      closeModal();
+    }
+    if (event.target == settingsModal) {
+      closeSettingsModal();
+    }
+  }
+
+  // Tutup settings modal dengan ESC key
+  document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+      closeModal();
+      closeSettingsModal();
+    }
+  });
+</script>
