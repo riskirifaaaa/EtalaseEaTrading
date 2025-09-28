@@ -158,6 +158,19 @@
       background: rgba(0, 0, 0, 0.3);
       border-radius: 5px;
     }
+    .price {
+  font-size: 16px;
+  font-weight: bold;
+  color: #00ffea;
+}
+
+.old-price {
+  text-decoration: line-through;
+  color: #888;
+  margin-right: 8px;
+  font-size: 14px;
+}
+
     .confirm-btn {
       background: #00ff00;
       color: black;
@@ -246,40 +259,39 @@
       </p>
     </div>
 
-    <div class="catalog">
-      <div class="item">
-        <img src="fo.jpg" alt="EA 1">
-        <h4>NO MARTINGLE</h4>
-        <p class="price">Rp200.000</p>
-        <button class="buy-btn" onclick="openModal('NO MARTINGLE', 'Rp200.000')">Beli Sekarang</button>
-      </div>
-      <div class="item">
-        <img src="fo.jpg" alt="EA 2">
-        <h4>MARTINGLE</h4>
-        <p class="price">Rp250.000</p>
-        <button class="buy-btn" onclick="openModal('MARTINGLE', 'Rp250.000')">Beli Sekarang</button>
-      </div>
-      <div class="item">
-        <img src="fotosample.png" alt="EA 3">
-        <h4>EQUITY NO MARTING</h4>
-        <p class="price">Rp280.000</p>
-        <button class="buy-btn" onclick="openModal('EQUITY NO MARTING', 'Rp280.000')">Beli Sekarang</button>
-      </div>
-      <div class="item">
-        <img src="fotosample.png" alt="EA 4">
-        <h4>EQUITY MARTINGLE</h4>
-        <p class="price">Rp300.000</p>
-        <button class="buy-btn" onclick="openModal('EQUITY MARTINGLE', 'Rp300.000')">Beli Sekarang</button>
-      </div>
-      <div class="item">
-        <img src="smple.jpg" alt="EA 5">
-        <h4>MARTING LANGSUNG</h4>
-        <p class="price">Rp360.000</p>
-        <button class="buy-btn" onclick="openModal('MARTING LANGSUNG', 'Rp360.000')">Beli Sekarang</button>
-      </div>
-    </div>
+```html
+<div class="catalog">
+  <div class="item">
+    <img src="fo.jpg" alt="EA 1">
+    <h4>NO MARTINGLE</h4>
+    <p class="price"><span class="old-price">Rp200.000</span> Rp160.000</p>
+    <button class="buy-btn" onclick="openModal('NO MARTINGLE', 'Rp160.000')">Beli Sekarang</button>
   </div>
-
+  <div class="item">
+    <img src="fo.jpg" alt="EA 2">
+    <h4>MARTINGLE</h4>
+    <p class="price"><span class="old-price">Rp250.000</span> Rp229.000</p>
+    <button class="buy-btn" onclick="openModal('MARTINGLE', 'Rp229.000')">Beli Sekarang</button>
+  </div>
+  <div class="item">
+    <img src="fotosample.png" alt="EA 3">
+    <h4>EQUITY NO MARTING</h4>
+    <p class="price"><span class="old-price">Rp280.000</span> Rp249.999</p>
+    <button class="buy-btn" onclick="openModal('EQUITY NO MARTING', 'Rp249.999')">Beli Sekarang</button>
+  </div>
+  <div class="item">
+    <img src="fotosample.png" alt="EA 4">
+    <h4>EQUITY MARTINGLE</h4>
+    <p class="price"><span class="old-price">Rp300.000</span> Rp278.999</p>
+    <button class="buy-btn" onclick="openModal('EQUITY MARTINGLE', 'Rp278.999')">Beli Sekarang</button>
+  </div>
+  <div class="item">
+    <img src="smple.jpg" alt="EA 5">
+    <h4>MARTING LANGSUNG</h4>
+    <p class="price"><span class="old-price">Rp360.000</span> Rp322.222</p>
+    <button class="buy-btn" onclick="openModal('MARTING LANGSUNG', 'Rp322.222')">Beli Sekarang</button>
+  </div>
+</div>
   <footer>
     Pembayaran tersedia: QRIS, BCA, Blu BCA, Jago, Sea Bank, Dana
   </footer>
@@ -534,6 +546,7 @@
     }
   });
 </script>
+
 
 
 
