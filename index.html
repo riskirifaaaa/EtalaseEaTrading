@@ -8,16 +8,16 @@
    * {
     box-sizing: border-box;
 }
-body { 
-    font-family: 'Poppins', sans-serif; 
-    margin: 0; padding: 0; 
-    background: linear-gradient(to bottom, #000000, #4B0082); /* Hitam ke ungu */
-    color: white; 
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0; padding: 0;
+    background: linear-gradient(135deg, #000000 0%, #001122 50%, #002244 100%); /* Dark blue-black gradient */
+    color: white;
     min-height: 100vh;
     position: relative;
     overflow-x: hidden;
 }
-/* Efek BG Biru Berjalan */
+/* Efek BG Neon Cyan & Purple Berjalan */
 body::before {
     content: '';
     position: fixed;
@@ -25,51 +25,66 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle at 20% 80%, rgba(0, 191, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(0, 191, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(0, 191, 255, 0.05) 0%, transparent 50%);
-    animation: blueFlow 20s ease-in-out infinite;
+    background: radial-gradient(circle at 20% 80%, rgba(0, 255, 255, 0.3) 0%, transparent 60%),
+                radial-gradient(circle at 80% 20%, rgba(255, 0, 255, 0.2) 0%, transparent 60%),
+                radial-gradient(circle at 40% 40%, rgba(0, 255, 255, 0.25) 0%, transparent 60%),
+                radial-gradient(circle at 60% 60%, rgba(138, 43, 226, 0.15) 0%, transparent 60%);
+    animation: neonGlow 15s ease-in-out infinite;
     z-index: -1;
     pointer-events: none;
 }
-@keyframes blueFlow {
-    0%, 100% { transform: translate(0, 0) rotate(0deg); opacity: 0.5; }
-    50% { transform: translate(50px, -50px) rotate(180deg); opacity: 0.8; }
+@keyframes neonGlow {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); opacity: 0.7; filter: blur(0px) hue-rotate(0deg); }
+    25% { transform: translate(30px, -30px) rotate(90deg); opacity: 1; filter: blur(3px) hue-rotate(90deg); }
+    50% { transform: translate(-30px, 30px) rotate(180deg); opacity: 0.9; filter: blur(5px) hue-rotate(180deg); }
+    75% { transform: translate(50px, 50px) rotate(270deg); opacity: 1; filter: blur(2px) hue-rotate(270deg); }
 }
-header { 
-    background: rgba(0,0,0,0.9); 
-    padding: 15px 20px; 
-    text-align: center; 
-    border-bottom: 3px solid #8A2BE2; /* Ungu accent */
-    box-shadow: 0 4px 10px rgba(138, 43, 226, 0.3);
+header {
+    background: rgba(0,0,0,0.9);
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid #00FFFF; /* Cyan accent */
+    box-shadow: 0 4px 10px rgba(0, 255, 255, 0.3);
     position: sticky;
     top: 0;
     z-index: 10;
 }
-header h1 { margin: 0; font-weight: 700; font-size: 1.8em; }
-header p { margin: 5px 0; font-weight: 300; }
-.cart-toggle {
-    background: #8A2BE2; 
-    color: white; 
-    border: none; 
-    padding: 10px 15px; 
-    border-radius: 25px; 
-    cursor: pointer; 
-    font-size: 16px; 
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 5px rgba(138, 43, 226, 0.4);
+.header-left {
+    flex: 0 0 auto;
 }
-.cart-toggle:hover { 
-    background: #6A1B9A; 
-    transform: scale(1.05); 
+.header-center {
+    flex: 1;
+    text-align: center;
+}
+.header-center h1 { margin: 0; font-weight: 700; font-size: 1.8em; }
+.header-center p { margin: 5px 0; font-weight: 300; }
+.header-right {
+    flex: 0 0 auto;
+}
+.cart-toggle {
+    background: #00FFFF;
+    color: black;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 255, 255, 0.4);
+}
+.cart-toggle:hover {
+    background: #008080;
+    transform: scale(1.05);
 }
 .container { max-width: 1200px; margin: 20px auto; padding: 0 20px; }
-.hero { 
-    text-align: center; 
-    padding: 60px 20px; 
-    background: rgba(75, 0, 130, 0.4); 
-    border-radius: 15px; 
-    margin-bottom: 40px; 
+.hero {
+    text-align: center;
+    padding: 60px 20px;
+    background: rgba(0, 128, 128, 0.4);
+    border-radius: 15px;
+    margin-bottom: 40px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.5);
     position: relative;
     overflow: hidden;
@@ -81,7 +96,7 @@ header p { margin: 5px 0; font-weight: 300; }
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(138, 43, 226, 0.2), transparent);
+    background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.3), transparent);
     animation: shimmer 3s infinite;
 }
 @keyframes shimmer {
@@ -90,25 +105,18 @@ header p { margin: 5px 0; font-weight: 300; }
 }
 .hero h2 { font-size: 2.2em; margin: 0 0 10px; font-weight: 600; }
 .hero p { font-size: 1.2em; margin: 0; font-weight: 300; }
-.hero img { 
-    max-width: 100%; 
-    height: auto; 
-    border-radius: 10px; 
-    margin-top: 20px;
-    box-shadow: 0 4px 15px rgba(138, 43, 226, 0.3);
-}
 .etalase { 
     display: grid; 
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
     gap: 25px; 
     margin-bottom: 40px; 
 }
-.ea-card { 
-    background: rgba(0,0,0,0.8); 
-    padding: 25px; 
-    border-radius: 15px; 
-    text-align: center; 
-    border: 2px solid #8A2BE2; 
+.ea-card {
+    background: rgba(0,0,0,0.8);
+    padding: 25px;
+    border-radius: 15px;
+    text-align: center;
+    border: 2px solid #00FFFF;
     transition: all 0.4s ease;
     animation: fadeInUp 0.6s ease forwards;
     opacity: 0;
@@ -123,10 +131,10 @@ header p { margin: 5px 0; font-weight: 300; }
 @keyframes fadeInUp {
     to { opacity: 1; transform: translateY(0); }
 }
-.ea-card:hover { 
-    transform: scale(1.05) translateY(-10px); 
-    box-shadow: 0 10px 25px rgba(138, 43, 226, 0.4);
-    border-color: #DC143C;
+.ea-card:hover {
+    transform: scale(1.05) translateY(-10px);
+    box-shadow: 0 10px 25px rgba(0, 255, 255, 0.4);
+    border-color: #FF4500;
 }
 .ea-card img { 
     max-width: 100%; 
@@ -135,10 +143,10 @@ header p { margin: 5px 0; font-weight: 300; }
     border-radius: 10px; 
     margin-bottom: 15px;
 }
-.ea-card h3 { 
-    font-size: 1.3em; 
-    margin: 10px 0; 
-    color: #8A2BE2; 
+.ea-card h3 {
+    font-size: 1.3em;
+    margin: 10px 0;
+    color: #00FFFF;
     font-weight: 600;
 }
 .ea-card p { 
@@ -146,49 +154,49 @@ header p { margin: 5px 0; font-weight: 300; }
     margin: 10px 0; 
     font-weight: 300;
 }
-.add-cart { 
-    background: linear-gradient(45deg, #8A2BE2, #DC143C); 
-    color: white; 
-    padding: 12px 25px; 
-    border: none; 
-    border-radius: 25px; 
-    cursor: pointer; 
-    font-size: 16px; 
+.add-cart {
+    background: linear-gradient(45deg, #00FFFF, #FF4500);
+    color: black;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
     font-weight: 600;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 10px rgba(138, 43, 226, 0.3);
+    box-shadow: 0 4px 10px rgba(0, 255, 255, 0.3);
 }
-.add-cart:hover { 
-    background: linear-gradient(45deg, #6A1B9A, #B22222); 
+.add-cart:hover {
+    background: linear-gradient(45deg, #008080, #DC143C);
     transform: scale(1.05);
 }
 #cart-section {
     position: relative;
 }
-#cart { 
-    background: rgba(0,0,0,0.9); 
-    padding: 25px; 
-    border-radius: 15px; 
-    margin-bottom: 40px; 
-    display: none; 
+#cart {
+    background: rgba(0,0,0,0.9);
+    padding: 25px;
+    border-radius: 15px;
+    margin-bottom: 40px;
+    display: none;
     box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-    border: 2px solid #8A2BE2;
+    border: 2px solid #00FFFF;
 }
 #cart.show { display: block; }
-#cart h2 { 
-    text-align: center; 
-    margin: 0 0 20px; 
-    color: #8A2BE2;
+#cart h2 {
+    text-align: center;
+    margin: 0 0 20px;
+    color: #00FFFF;
     font-size: 1.8em;
 }
-.cart-item { 
-    display: flex; 
-    justify-content: space-between; 
+.cart-item {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    margin: 15px 0; 
-    padding: 15px; 
-    background: rgba(138, 43, 226, 0.1); 
-    border-radius: 10px; 
+    margin: 15px 0;
+    padding: 15px;
+    background: rgba(0, 255, 255, 0.1);
+    border-radius: 10px;
     font-weight: 400;
 }
 .remove-cart { 
@@ -201,37 +209,37 @@ header p { margin: 5px 0; font-weight: 300; }
     transition: background 0.3s;
 }
 .remove-cart:hover { background: #B22222; }
-.payment-methods { 
-    margin: 20px 0; 
-    padding: 20px; 
-    background: rgba(0,0,0,0.6); 
-    border-radius: 10px; 
-    border: 1px solid #8A2BE2;
+.payment-methods {
+    margin: 10px 0;
+    padding: 15px;
+    background: rgba(0,0,0,0.6);
+    border-radius: 10px;
+    border: 1px solid #00FFFF;
 }
-.payment-methods h3 { 
-    color: #8A2BE2; 
+.payment-methods h3 {
+    color: #00FFFF;
     margin: 0 0 15px;
     font-size: 1.4em;
 }
-.payment-methods p { 
-    font-size: 0.95em; 
-    margin: 10px 0; 
+.payment-methods p {
+    font-size: 0.95em;
+    margin: 10px 0;
     color: #ccc;
 }
-.method-option { 
-    display: flex; 
+.method-option {
+    display: flex;
     align-items: flex-start;
-    margin: 15px 0; 
-    padding: 15px; 
-    background: rgba(138, 43, 226, 0.05); 
-    border-radius: 10px; 
+    margin: 15px 0;
+    padding: 15px;
+    background: rgba(0, 255, 255, 0.05);
+    border-radius: 10px;
     transition: background 0.3s;
 }
-.method-option:hover { background: rgba(138, 43, 226, 0.15); }
-.method-option input[type="radio"] { 
-    margin-right: 15px; 
+.method-option:hover { background: rgba(0, 255, 255, 0.15); }
+.method-option input[type="radio"] {
+    margin-right: 15px;
     transform: scale(1.2);
-    accent-color: #8A2BE2;
+    accent-color: #00FFFF;
 }
 .method-details { 
     font-size: 14px; 
@@ -242,20 +250,19 @@ header p { margin: 5px 0; font-weight: 300; }
     border-radius: 5px;
     margin-top: 5px;
 }
-.wa-btn { 
-    background: linear-gradient(45deg, #25D366, #128C7E); 
-    color: white; 
-    padding: 15px 30px; 
-    text-decoration: none; 
-    border-radius: 25px; 
-    font-size: 18px; 
-    display: none; 
-    margin: 15px auto; 
+.wa-btn {
+    background: linear-gradient(45deg, #25D366, #128C7E);
+    color: white;
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 25px;
+    font-size: 18px;
+    display: none;
+    margin: 15px auto;
     font-weight: 600;
     box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
     transition: all 0.3s ease;
     text-align: center;
-    display: block;
     max-width: 300px;
 }
 .wa-btn.show { display: block; }
@@ -274,13 +281,80 @@ header p { margin: 5px 0; font-weight: 300; }
     border-radius: 5px;
     border: 1px solid #DC143C;
 }
-footer { 
-    background: rgba(0,0,0,0.95); 
-    text-align: center; 
-    padding: 20px; 
-    border-top: 3px solid #8A2BE2; 
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+}
+.modal-content {
+    background: rgba(0,0,0,0.9);
+    padding: 25px;
+    border-radius: 15px;
+    border: 2px solid #00FFFF;
+    max-width: 600px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 8px 20px rgba(0, 255, 255, 0.4);
+}
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.modal-header h2 {
+    color: #00FFFF;
+    margin: 0;
+    font-size: 1.5em;
+}
+.close {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.close:hover,
+.close:focus {
+    color: white;
+    text-decoration: none;
+}
+.modal-body {
+    color: #ccc;
+    line-height: 1.6;
+}
+.explanation-btn {
+    background: linear-gradient(45deg, #00FFFF, #FF4500);
+    color: black;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+    box-shadow: 0 2px 5px rgba(0, 255, 255, 0.3);
+}
+.explanation-btn:hover {
+    background: linear-gradient(45deg, #008080, #DC143C);
+    transform: scale(1.05);
+}
+footer {
+    background: rgba(0,0,0,0.95);
+    text-align: center;
+    padding: 20px;
+    border-top: 3px solid #00FFFF;
     font-size: 0.9em;
-    box-shadow: 0 -4px 10px rgba(138, 43, 226, 0.3);
+    box-shadow: 0 -4px 10px rgba(0, 255, 255, 0.3);
 }
 
 /* Responsive */
@@ -314,64 +388,76 @@ footer {
 </head>
 <body>
     <header>
-        <h1>🛒 EA MT5 Shop - Premium Trading Bots</h1>
-        <p>Tingkatkan Trading Anda dengan EA Terbaik! Tema Dark Ungu untuk Pengalaman Premium.</p>
-        <button onclick="toggleCart()" style="background: #DC143C; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer;">🛒 Keranjang (<span id="cart-count">0</span>)</button>
+        <div class="header-left">
+            <button class="cart-toggle" onclick="scrollToPayment()">🛒 Keranjang (<span id="cart-count">0</span>)</button>
+        </div>
+        <div class="header-center">
+            <h1>🛒 EA MT5 Shop - Premium Trading Bots</h1>
+            <p>Tingkatkan Trading Anda dengan EA Terbaik!</p>
+        </div>
+        <div class="header-right">
+            <!-- Kosong untuk balance -->
+        </div>
     </header>
 
     <div class="container">
         <section class="hero">
             <h2>Selamat Datang di Toko EA MT5 Kami</h2>
-            <p>Pilih dari 6 EA unggulan kami</p>
-            <img src="ppris.jpg" alt="EA Collection" style="max-width: 100%; border-radius: 10px;">
+            <p>Pilih dari 6 EA unggulan kami untuk profit maksimal!</p>
         </section>
 
         <section class="etalase">
             <div class="ea-card">
                 <img src="fo.jpg" alt="SuperProfit EA">
-                <h3>Basic Martingle Biasa</h3>
+                <h3>Martingle Biasa</h3>
                 <p>EA scalping untuk profit harian</p>
-                <p><strong>Harga: Rp270.000</strong></p>
-                <button class="add-cart" onclick="addToCart('Basic Martingle Biasa', 270000)">Tambah ke Keranjang</button>
+                <p><strong>Harga: Rp250.000</strong></p>
+                <button class="add-cart" onclick="addToCart('Martingle Biasa', 250000)">Tambah ke Keranjang</button>
+                <button class="explanation-btn" onclick="showExplanation('Martingle Biasa')">Penjelasan</button>
             </div>
             <div class="ea-card">
                 <img src="fo.jpg" alt="SuperProfit EA">
-                <h3>Basic Martingle equity</h3>
+                <h3>Martingle equity</h3>
                 <p>EA scalping untuk Target harian Karna Ea stop Di Targetkan</p>
-                <p><strong>Harga: Rp300.000</strong></p>
-                <button class="add-cart" onclick="addToCart('Basic Martingle equity', 300000)">Tambah ke Keranjang</button>
+                <p><strong>Harga: Rp320.000</strong></p>
+                <button class="add-cart" onclick="addToCart('Martingle Equity', 320000)">Tambah ke Keranjang</button>
+                <button class="explanation-btn" onclick="showExplanation('Martingle Equity')">Penjelasan</button>
             </div>
 
             <div class="ea-card">
                 <img src="fo.jpg" alt="TrendMaster EA">
-                <h3>Basic Ea Counter Langsung</h3>
+                <h3>Ea Counter Langsung</h3>
                 <p>Ea Scalping Agresive + Profitable</p>
-                <p><strong>Harga: Rp400.000</strong></p>
-                <button class="add-cart" onclick="addToCart('Basic Ea Counter Langsung', 400000)">Tambah ke Keranjang</button>
+                <p><strong>Harga: Rp410.000</strong></p>
+                <button class="add-cart" onclick="addToCart('Ea Counter Langsung', 410000)">Tambah ke Keranjang</button>
+                <button class="explanation-btn" onclick="showExplanation('Ea Counter Langsung')">Penjelasan</button>
             </div>
 
             <div class="ea-card">
                 <img src="smple.jpg" alt="GoldHunter EA">
-                <h3>Pro Martingle Biasa</h3>
+                <h3>Marting Biasa + DD + Lot Multy & Step</h3>
                 <p>Ea Scalpinng Low Resiko</p>
                 <p><strong>Harga: Rp450.000</strong></p>
-                <button class="add-cart" onclick="addToCart('Pro Martingle Biasa', 450000)">Tambah ke Keranjang</button>
+                <button class="add-cart" onclick="addToCart('Marting Biasa + DD + Lot Multy & Step', 450000)">Tambah ke Keranjang</button>
+                <button class="explanation-btn" onclick="showExplanation('Marting Biasa + DD + Lot Multy & Step')">Penjelasan</button>
             </div>
 
             <div class="ea-card">
                 <img src="smple.jpg" alt="NewsTrader EA">
-                <h3>Pro Martingle equity</h3>
+                <h3>Marting Equity + DD + Lot Multy & Step</h3>
                 <p>EA Scalping Equity Target Saldo Ea Mati</p>
-                <p><strong>Harga: Rp470.000</strong></p>
-                <button class="add-cart" onclick="addToCart('Pro Martingle equity', 470000)">Tambah ke Keranjang</button>
+                <p><strong>Harga: Rp500.000</strong></p>
+                <button class="add-cart" onclick="addToCart('Marting Equity + DD + Lot Multy & Step', 500000)">Tambah ke Keranjang</button>
+                <button class="explanation-btn" onclick="showExplanation('Marting Equity + DD + Lot Multy & Step')">Penjelasan</button>
             </div>
 
             <div class="ea-card">
                 <img src="smple.jpg" alt="MultiPair EA">
-                <h3>Pro Ea Counter Langsung</h3>
+                <h3>Marting Langsung 0.02 + DD + Lot Multy & Step</h3>
                 <p> Ea Cocok Cari Profit Karna Fitur Sudah Lengkap Dari Pada Yang Di Atas</p>
                 <p><strong>Harga: Rp570.000</strong></p>
-                <button class="add-cart" onclick="addToCart('Pro Basic Ea Counter Langsung', 570000)">Tambah ke Keranjang</button>
+                <button class="add-cart" onclick="addToCart('Marting Langsung 0.02 + DD + Lot Multy & Step', 570000)">Tambah ke Keranjang</button>
+                <button class="explanation-btn" onclick="showExplanation('Marting Langsung 0.02 + DD + Lot Multy & Step')">Penjelasan</button>
             </div>
         </section>
 
@@ -382,49 +468,55 @@ footer {
                 <p><strong>Total: Rp <span id="total">0</span></strong></p>
                 
                 <div class="payment-methods">
-                    <h3>Pilih Metode Pembayaran Dulu</h3>
-                    <p>Bayar via metode ini, abis bayar kirim SS bukti ke WA kami untuk verifikasi & kirim EA (max 1 jam).</p>
-                    
-                    <div class="method-option">
-                        <input type="radio" id="dana" name="payment" value="dana" onchange="updateWaLink()">
-                        <label for="dana"><strong>DANA</strong></label>
-                        <div class="method-details">
-                            <p>No. DANA: 081252636815</p>
-                            <p>Atas Nama: HANA</p>
-                        </div>
-                    </div>
+                    <h3>Pilih Metode Pembayaran</h3>
+                    <p>Ikuti langkah-langkah berikut untuk pembayaran yang aman dan cepat:</p>
+                    <ol style="text-align: left; color: #ccc; margin: 10px 0;">
+                        <li>Pilih metode pembayaran yang diinginkan.</li>
+                        <li>Transfer sesuai nominal total yang tertera.</li>
+                        <li>Ambil screenshot bukti transfer.</li>
+                        <li>Klik tombol "Lanjut ke WA" dan kirim screenshot ke admin.</li>
+                        <li>EA akan dikirim maksimal 1 jam setelah verifikasi.</li>
+                    </ol>
 
                     <div class="method-option">
                         <input type="radio" id="dana" name="payment" value="dana" onchange="updateWaLink()">
                         <label for="dana"><strong>DANA</strong></label>
                         <div class="method-details">
+                            <p><strong>Cara Bayar:</strong> Buka aplikasi DANA, pilih transfer, masukkan nomor di bawah.Pastikan Nama Sesuai Jika Sala/Berbeda Langsung Chat Admin</p>
                             <p>No. DANA: 082150102225</p>
                             <p>Atas Nama: M.DWI RISKI</p>
+                            <p><em>Pastikan nominal sesuai untuk menghindari kesalahan.</em></p>
                         </div>
                     </div>
-                    
+
                     <div class="method-option">
                         <input type="radio" id="qris" name="payment" value="qris" onchange="updateWaLink()">
                         <label for="qris"><strong>QRIS</strong></label>
                         <div class="method-details">
-                            <p>Scan QRIS ini untuk bayar (ganti dengan QR real lo).</p>
+                            <p><strong>Cara Bayar:</strong> Buka aplikasi e-wallet (DANA, OVO, GoPay, dll.), pilih scan QR, scan kode di bawah.Pastikan Nama Sesuai Jika Sala/Berbeda Langsung Chat Admin</p>
                             <img src="qrr.jpg" alt="QRIS" style="max-width: 100%;">
+                            <p>Atas Nama: RISSHOP</p>
+                            <p><em>QRIS mendukung berbagai bank dan e-wallet untuk kemudahan Anda.</em></p>
                         </div>
                     </div>
-                    
+
                     <div class="method-option">
                         <input type="radio" id="seabank" name="payment" value="seabank" onchange="updateWaLink()">
                         <label for="seabank"><strong>SeaBank</strong></label>
                         <div class="method-details">
+                            <p><strong>Cara Bayar:</strong> Buka aplikasi SeaBank, pilih transfer ke rekening, masukkan nomor di bawah.Pastikan Nama Sesuai Jika Sala/Berbeda Langsung Chat Admin </p>
                             <p>No Rek: 901437148557</p>
-                            <p>Atas Nama: M. Dwi Riski</p>
+                            <p>Atas Nama: M.DWI RISKI</p>
+                            <p><em>SeaBank aman dan cepat untuk transfer antar bank.</em></p>
                         </div>
                     </div>
                 </div>
                 
                 <a href="#" class="wa-btn" id="wa-btn" onclick="sendToWa()">Lanjut ke WA (Abis Bayar Kirim SS Bukti)</a>
                 
-                <p><strong>Disclaimer:</strong> Trading berisiko. Hasil tidak dijamin Sesuaikan Target Harian 10%/20% Perhari.</p>
+                <div class="disclaimer">
+                    <p><strong>Disclaimer:</strong> Trading forex berisiko tinggi. Hasil masa lalu tidak menjamin hasil di masa depan. Gunakan EA dengan bijak, sesuaikan dengan modal dan toleransi risiko Anda. Target harian 10-20% per hari, tapi tetap waspada terhadap drawdown. Kami tidak bertanggung jawab atas kerugian trading.</p>
+                </div>
             </div>
         </section>
     </div>
@@ -432,6 +524,19 @@ footer {
     <footer>
         <p>&copy; 2023 EA MT5 Shop. Kontak: WA 081252636815 | Email: riskislebew45@gmail.com</p>
     </footer>
+
+    <!-- Modal -->
+    <div id="explanation-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">Penjelasan EA</h2>
+                <span class="close" onclick="closeModal()">&times;</span>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Content will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
 
     <script>
         let cart = [];
@@ -492,13 +597,13 @@ footer {
                 let detailText = '';
                 if (selectedMethod === 'dana') {
                     methodText = 'DANA';
-                    detailText = 'ke 0812-3456-7890 (Atas Nama: Nama Lo)';
+                    detailText = 'ke 0812-3456-7890 (Atas Nama:M.DWI RISKI)';
                 } else if (selectedMethod === 'qris') {
                     methodText = 'QRIS';
                     detailText = '(scan gambar di website)';
                 } else if (selectedMethod === 'seabank') {
                     methodText = 'SeaBank';
-                    detailText = '(SeaBank: 0987654321 Atas Nama: Nama Lo)';
+                    detailText = '(SeaBank: 0987654321 Atas Nama: M.DWI RISKI)';
                 }
                 const waText = `Halo! Saya mau beli: ${itemsText}. Total: Rp ${total.toLocaleString('id-ID')}. Metode: ${methodText} ${detailText}. Saya bayar sekarang, abis bayar saya kirim SS bukti ke sini ya. ID Pesanan: ${Date.now()}.`;
                 document.getElementById('wa-btn').href = `https://wa.me/6281252636815?text=${encodeURIComponent(waText)}`;
@@ -517,10 +622,110 @@ footer {
             alert('Buka WA sekarang! Customer bayar, lalu kirim SS bukti ke chat yang sama.');
             toggleCart(); // Tutup cart setelah kirim
         }
+
+        function scrollToPayment() {
+            const cartSection = document.getElementById('cart-section');
+            cartSection.scrollIntoView({ behavior: 'smooth' });
+            document.getElementById('cart').classList.add('show');
+        }
+
+        function showExplanation(eaName) {
+            const modal = document.getElementById('explanation-modal');
+            const title = document.getElementById('modal-title');
+            const body = document.getElementById('modal-body');
+            title.textContent = `Penjelasan ${eaName}`;
+            let content = '';
+            switch(eaName) {
+                case 'Martingle Biasa':
+                    content = `
+                        <p><strong>Martingle Biasa (Basic)</strong> - EA scalping sederhana tanpa fitur tambahan.</p>
+                        <ul>
+                            <li><strong>Strategi:</strong> Martingale biasa, counter awal 0.01, terus martingale sampai profit .</li>
+                            <li><strong>Target:</strong> Profit harian 10-20%, tapi EA terus jalan tanpa stop otomatis .</li>
+                            <li><strong>Risiko:</strong> Tidak Ada Fitur DD & Equity Target.</li>
+                            <li><strong>Bedanya sama Pro:</strong> Pro ada fitur DD control, lot multi/step, dan kunci profit (misal target 3$, kalau market lanjut ke 5$ lalu turun 1$, EA close di 4$).</li>
+                            <li><strong>Rekomendasi:</strong> Cocok buat pemula, modal kecil, tapi monitor terus. Karena Tidak Ada DD/Equity</li>
+                        </ul>
+                    `;
+                    break;
+                case 'Martingle Equity':
+                    content = `
+                        <p><strong>Martingle Equity (Basic)</strong> - EA scalping dengan target equity, EA mati otomatis.</p>
+                        <ul>
+                            <li><strong>Strategi:</strong> Martingale dengan target saldo, counter awal 0.01, EA stop kalau equity capai target.</li>
+                            <li><strong>Target:</strong> Profit harian 10-15%, fokus equity bukan floating, EA mati setelah profit.Misal Saldo Awal 100 Kita setting/input 200 jika ea profit2 hingga saldo/balance 200 ea akan mati</li>
+                            <li><strong>Risiko:</strong> Lebih aman dari biasa karena stop otomatis, tapi masih tanpa DD control.</li>
+                            <li><strong>Bedanya sama Biasa:</strong> Equity stop di target, Biasa terus jalan. Sama Pro: Pro ada DD, lot multi/step, kunci profit.</li>
+                            <li><strong>Rekomendasi:</strong> Buat yang mau profit pasti per hari tanpa monitor terus.</li>
+                        </ul>
+                    `;
+                    break;
+                case 'Ea Counter Langsung':
+                    content = `
+                        <p><strong>Ea Counter Langsung (Pro)</strong> - EA scalping agresif, counter langsung tanpa delay.</p>
+                        <ul>
+                            <li><strong>Strategi:</strong> Counter trend langsung dari awal 0.02, agresif tanpa martingale lambat.</li>
+                            <li><strong>Target:</strong> Profit tinggi cepat, cocok scalper.</li>
+                            <li><strong>Risiko:</strong> Agresif, floating bisa tinggi, cocok trader berpengalaman.</li>
+                            <li><strong>Bedanya sama Basic:</strong> Basic Masi tidak ada DD + Mode lot multi/step .</li>
+                            <li><strong>Rekomendasi:</strong> Gunakan saat Sesi tokyo/Sydney atau volatilitas Medium, monitor ketat.</li>
+                        </ul>
+                    `;
+                    break;
+                case 'Marting Biasa + DD + Lot Multy & Step':
+                    content = `
+                        <p><strong>Marting Biasa + DD + Lot Multy & Step (Pro)</strong> - Versi pro dari Martingle Biasa dengan fitur lengkap.</p>
+                        <ul>
+                            <li><strong>Strategi:</strong> Martingale biasa tapi ada kontrol DD, lot multiplier & step, kunci profit.</li>
+                            <li><strong>Target:</strong> Profit stabil, misal target 3$, kalau market lanjut ke 5$ lalu turun 1$, EA close di 4$.</li>
+                            <li><strong>Risiko:</strong> Tidak Ada Equity Target Ea mati DI balance berapa tapi sudah ada DD buat tutup floating minus</li>
+                            <li><strong>Bedanya sama Basic:</strong> Ada DD control, lot multi/step, kunci profit.</li>
+                            <li><strong>Rekomendasi:</strong> Cocok scalping harian, lebih aman dari basic.</li>
+                        </ul>
+                    `;
+                    break;
+                case 'Marting Equity + DD + Lot Multy & Step':
+                    content = `
+                        <p><strong>Marting Equity + DD + Lot Multy & Step (Pro)</strong> - Versi pro dari Martingle Equity dengan fitur lengkap.</p>
+                        <ul>
+                            <li><strong>Strategi:</strong> Martingale equity dengan DD control, lot multiplier & step, kunci profit.</li>
+                            <li><strong>Target:</strong> EA mati setelah profit, dengan kunci profit (target 3$ ke 4$ kalau kondisi pas).</li>
+                            <li><strong>Risiko:</strong> Sangat rendah, DD terkontrol, fokus profit bersih.</li>
+                            <li><strong>Bedanya sama Basic:</strong> Ada DD, lot multi/step, kunci profit. Basic tanpa itu.</li>
+                            <li><strong>Rekomendasi:</strong> Ideal trading otomatis jangka panjang, aman banget.</li>
+                        </ul>
+                    `;
+                    break;
+                case 'Marting Langsung 0.02 + DD + Lot Multy & Step':
+                    content = `
+                        <p><strong>Marting Langsung 0.02 + DD + Lot Multy & Step (Pro)</strong> - EA lengkap, counter langsung 0.02 dengan semua fitur.</p>
+                        <ul>
+                            <li><strong>Strategi:</strong> Martingale langsung dari lot 0.02, DD control, lot multi/step, kunci profit.</li>
+                            <li><strong>Target:</strong> Profit maksimal, fitur lebih lengkap dari yang lain, kunci profit jaga keuntungan.</li>
+                            <li><strong>Risiko:</strong> Terukur dengan DD control, tapi mulai dari 0.02 lebih agresif.</li>
+                            <li><strong>Bedanya sama yang lain:</strong> Counter langsung 0.02, semua fitur pro lengkap. FULL Fitur</li>
+                            <li><strong>Rekomendasi:</strong> Buat yang mau hasil maksimal, cocok trader advanced.</li>
+                        </ul>
+                    `;
+                    break;
+                default:
+                    content = '<p>Penjelasan tidak tersedia.</p>';
+            }
+            body.innerHTML = content;
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('explanation-modal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('explanation-modal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
     </script>
 </body>
 </html>
-
-
-
-
